@@ -1,0 +1,66 @@
+routes = {
+    "Warehouse": {"Shop A": 4, "Shop B": 2},
+    "Shop A": {"Warehouse": 4, "Shop B": 1, "Shop C": 5},
+    "Shop B": {"Warehouse": 2, "Shop A": 1, "Shop C": 8},
+    "Shop C": {"Shop A": 5, "Shop B": 8}
+}
+
+def find_route(start, destination):
+    distance = {place: float('inf') for place in routes}
+    distance[start] = 0
+    previous = {}
+    visited = set()
+
+    while len(visited) < len(routes):
+        current = None
+
+        for place in routes:
+            if place not in visited:
+                if current is None or distance[place] < distance[current]:
+                    current = place
+
+        if current is None or distance[current] == float('inf'):
+            break
+
+        if current == destination:
+            break
+
+        visited.add(current)
+
+        for neighbor, cost in routes[current].items():
+            new_distance = distance[current] + cost
+
+            if new_distance < distance[neighbor]:
+                distance[neighbor] = new_distance
+                previous[neighbor] = current
+
+    if distance[destination] == float('inf'):
+        print("No delivery route found!")
+        return
+
+    path = []
+    place = destination
+
+    while place != start:
+        path.append(place)
+        place = previous[place]
+
+    path.append(start)
+    path.reverse()
+
+    print("\nShortest Delivery Route:")
+    print(" -> ".join(path))
+    print("Total Distance:", distance[destination], "km")
+
+
+print("DELIVERY ROUTE FINDER")
+print("Available Locations:", ", ".join(routes))
+
+start = input("Enter starting location: ").strip().title()
+destination = input("Enter destination: ").strip().title()
+
+if start not in routes or destination not in routes:
+    print("Invalid location!")
+else:
+    find_route(start, destination)
+
