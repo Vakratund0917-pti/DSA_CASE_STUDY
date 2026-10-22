@@ -1,0 +1,49 @@
+employees = {}
+
+while True:
+    print("\n===== EMPLOYEE INFORMATION SYSTEM =====")
+    print("1. Add Employee")
+    print("2. Search Employee")
+    print("3. Display All Employees")
+    print("4. Exit")
+
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        emp_id = input("Enter Employee ID: ")
+        name = input("Enter Employee Name: ")
+        salary = input("Enter Salary: ")
+
+        employees[emp_id] = {
+            "Name": name,
+            "Salary": salary
+        }
+
+        print("Employee added successfully!")
+
+    elif choice == "2":
+        emp_id = input("Enter Employee ID to search: ")
+
+        if emp_id in employees:
+            print("Employee Name:", employees[emp_id]["Name"])
+            print("Salary:", employees[emp_id]["Salary"])
+        else:
+            print("Employee not found!")
+
+    elif choice == "3":
+        if not employees:
+            print("No employee records available.")
+        else:
+            for emp_id, details in employees.items():
+                print(
+                    "ID:", emp_id,
+                    "| Name:", details["Name"],
+                    "| Salary:", details["Salary"]
+                )
+
+    elif choice == "4":
+        print("Thank you!")
+        break
+
+    else:
+        print("Invalid choice! Try again.")
