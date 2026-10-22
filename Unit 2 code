@@ -1,0 +1,30 @@
+family = {
+    "Grandfather": ["Father", "Uncle"],
+    "Grandmother": ["Father", "Uncle"],
+    "Father": ["Mother", "Son", "Daughter"],
+    "Mother": ["Son", "Daughter"],
+    "Uncle": ["Aunt", "Cousin"],
+    "Aunt": ["Cousin"],
+    "Son": [],
+    "Daughter": [],
+    "Cousin": []
+}
+print("FAMILY RELATIONSHIP MAPPING SYSTEM")
+print("-" * 40)
+for member, relatives in family.items():
+    print(member, "->", end=" ")
+
+    if relatives:
+        print(", ".join(relatives))
+    else:
+        print("No connections listed")
+name = input("\nEnter a family member's name: ").strip().title()
+if name in family:
+    print("\nRelationships of", name, ":")
+    if family[name]:
+        for relative in family[name]:
+            print("-", relative)
+    else:
+        print("No relationships listed.")
+else:
+    print("Family member not found.")
