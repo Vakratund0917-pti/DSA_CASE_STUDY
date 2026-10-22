@@ -1,0 +1,46 @@
+def merge_sort(books):
+    if len(books) <= 1:
+        return books
+    mid = len(books) // 2
+    left = merge_sort(books[:mid])
+    right = merge_sort(books[mid:])
+    return merge(left, right)
+def merge(left, right):
+    result = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i]["title"].lower() <= right[j]["title"].lower():
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    result.extend(left[i:])
+    result.extend(right[j:])
+    return result
+print("=== Library Book Sorting System ===")
+books = []
+n = int(input("Enter the number of books: "))
+for i in range(n):
+    print(f"\nEnter details for book {i + 1}:")
+    title = input("Enter book title: ")
+    author = input("Enter author name: ")
+    book_id = input("Enter book ID: ")
+    books.append({
+        "title": title,
+        "author": author,
+        "book_id": book_id
+    })
+sorted_books = merge_sort(books)
+print("\n=== Sorted Library Books ===")
+print("-" * 65)
+print(f"{'Book ID':<12}{'Title':<30}{'Author':<23}")
+print("-" * 65)
+for book in sorted_books:
+    print(
+        f"{book['book_id']:<12}"
+        f"{book['title']:<30}"
+        f"{book['author']:<23}"
+    )
+print("-" * 65)
+print("Books sorted successfully!")
